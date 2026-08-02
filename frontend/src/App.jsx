@@ -17,6 +17,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import RestaurantDetails from './pages/RestaurantDetails';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,6 +50,7 @@ function App() {
             >
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/restaurants/:id" element={<RestaurantDetails />} />
               <Route path="/orders" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">My Orders</h2><p className="text-slate-500 mt-2">Order tracking will be enabled in Phase 4.</p></div>} />
               <Route path="/cart" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">Shopping Cart</h2><p className="text-slate-500 mt-2">Shopping cart details will be enabled in Phase 3.</p></div>} />
             </Route>
