@@ -26,7 +26,7 @@ func main() {
 		log.Fatalf("Database migration failed: %v", err)
 	}
 
-	// 4. Setup Router
+	// 4. Setup Router  
 	router := routes.SetupRouter(db, cfg)
 
 	// 5. Start Server

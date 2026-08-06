@@ -18,6 +18,9 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import RestaurantDetails from './pages/RestaurantDetails';
+import Cart from './pages/Cart';
+import Orders from './pages/Orders';
+import OwnerOrders from './pages/OwnerOrders';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,7 +42,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Route>
-
+ 
             {/* Protected Customer Routes */}
             <Route
               element={
@@ -51,10 +54,10 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/restaurants/:id" element={<RestaurantDetails />} />
-              <Route path="/orders" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">My Orders</h2><p className="text-slate-500 mt-2">Order tracking will be enabled in Phase 4.</p></div>} />
-              <Route path="/cart" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">Shopping Cart</h2><p className="text-slate-500 mt-2">Shopping cart details will be enabled in Phase 3.</p></div>} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/cart" element={<Cart />} />
             </Route>
-
+ 
             {/* Protected Restaurant Owner Routes */}
             <Route
               element={
@@ -67,7 +70,7 @@ function App() {
               <Route path="/owner/restaurant" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">Restaurant Management</h2><p className="text-slate-500 mt-2">Restaurant details management will be enabled in Phase 2.</p></div>} />
               <Route path="/owner/categories" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">Category Management</h2><p className="text-slate-500 mt-2">Food categories CRUD will be enabled in Phase 2.</p></div>} />
               <Route path="/owner/foods" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">Menu & Food Items</h2><p className="text-slate-500 mt-2">Food inventory management will be enabled in Phase 2.</p></div>} />
-              <Route path="/owner/orders" element={<div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm"><h2 className="text-xl font-bold">Incoming Orders</h2><p className="text-slate-500 mt-2">Order fulfillment will be enabled in Phase 4.</p></div>} />
+              <Route path="/owner/orders" element={<OwnerOrders />} />
             </Route>
 
             {/* Fallback Redirect */}

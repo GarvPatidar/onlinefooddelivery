@@ -11,9 +11,11 @@ import (
 )
 
 type Config struct {
-	Port        string
-	DatabaseURL string
-	JWTSecret   string
+	Port              string
+	DatabaseURL       string
+	JWTSecret         string
+	RazorpayKeyID     string
+	RazorpayKeySecret string
 }
 
 func LoadConfig() *Config {
@@ -23,9 +25,11 @@ func LoadConfig() *Config {
 	}
 
 	return &Config{
-		Port:        getEnv("PORT", "8080"),
-		DatabaseURL: getEnv("DATABASE_URL", "host=localhost user=postgres password=postgres dbname=online_food_delivery port=5432 sslmode=disable"),
-		JWTSecret:   getEnv("JWT_SECRET", "supersecretkey"),
+		Port:              getEnv("PORT", "8080"),
+		DatabaseURL:       getEnv("DATABASE_URL", "host=localhost user=postgres password=postgres dbname=online_food_delivery port=5432 sslmode=disable"),
+		JWTSecret:         getEnv("JWT_SECRET", "supersecretkey"),
+		RazorpayKeyID:     getEnv("RAZORPAY_KEY_ID", ""),
+		RazorpayKeySecret: getEnv("RAZORPAY_KEY_SECRET", ""),
 	}
 }
 

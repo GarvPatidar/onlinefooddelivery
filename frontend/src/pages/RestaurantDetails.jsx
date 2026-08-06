@@ -38,8 +38,18 @@ const RestaurantDetails = () => {
     }
   };
 
-  const handleAddToCart = (foodName) => {
-    toast.success(`${foodName} added! (Cart system will be enabled in Phase 3)`);
+  const handleAddToCart = async (foodId, foodName) => {
+    try {
+      const res = await api.post('/cart/items', {
+        food_id: foodId,
+        quantity: 1
+      });
+      if (res.data?.success) {
+        toast.success(`${foodName} added to cart!`);
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.error || 'Failed to add item to cart');
+    }
   };
 
   if (loading) {
@@ -139,7 +149,7 @@ const RestaurantDetails = () => {
                 <div className="shrink-0">
                   {food.availability ? (
                     <button
-                      onClick={() => handleAddToCart(food.name)}
+                      onClick={() => handleAddToCart(food.id, food.name)}
                       className="px-3.5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-extrabold transition shadow-sm hover:shadow"
                     >
                       Add +

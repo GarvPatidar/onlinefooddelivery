@@ -21,16 +21,25 @@ func SetupRouter(db *gorm.DB, cfg *config.Config) *gin.Engine {
 	userRepo := repositories.NewUserRepository(db)
 	restaurantRepo := repositories.NewRestaurantRepository(db)
 	foodRepo := repositories.NewFoodRepository(db)
+	cartRepo := repositories.NewCartRepository(db)
+	addressRepo := repositories.NewAddressRepository(db)
+	orderRepo := repositories.NewOrderRepository(db)
 
 	// Initialize Services
 	userService := services.NewUserService(userRepo, cfg)
 	restaurantService := services.NewRestaurantService(restaurantRepo)
 	foodService := services.NewFoodService(foodRepo, restaurantRepo)
+	cartService := services.NewCartService(cartRepo, foodRepo)
+	addressService := services.NewAddressService(addressRepo)
+	orderService := services.NewOrderService(orderRepo, cartRepo, addressRepo, restaurantRepo, cfg)
 
 	// Initialize Controllers
 	authController := controllers.NewAuthController(userService)
 	restaurantController := controllers.NewRestaurantController(restaurantService)
 	foodController := controllers.NewFoodController(foodService)
+	cartController := controllers.NewCartController(cartService)
+	addressController := controllers.NewAddressController(addressService)
+	orderController := controllers.NewOrderController(orderService)
 
 	// API Groups
 	api := r.Group("/api/v1")
@@ -62,6 +71,23 @@ func SetupRouter(db *gorm.DB, cfg *config.Config) *gin.Engine {
 			protected.POST("/restaurants/:id/foods", foodController.AddFood)
 			protected.PUT("/foods/:id", foodController.UpdateFood)
 			protected.DELETE("/foods/:id", foodController.DeleteFood)
+
+			// Cart Routes
+			protected.GET("/cart", cartController.GetCart)
+			protected.POST("/cart/items", cartController.UpdateCartItem)
+			protected.DELETE("/cart/items/:foodId", cartController.RemoveCartItem)
+			protected.DELETE("/cart", cartController.ClearCart)
+
+			// Address Routes
+			protected.GET("/addresses", addressController.GetAddresses)
+			protected.POST("/addresses", addressController.CreateAddress)
+
+			// Order & Payment Routes
+			protected.POST("/orders/checkout", orderController.Checkout)
+			protected.POST("/orders/verify", orderController.VerifyPayment)
+			protected.GET("/orders/my", orderController.GetMyOrders)
+			protected.GET("/owner/orders", orderController.GetOwnerOrders)
+			protected.PATCH("/orders/:id/status", orderController.UpdateOrderStatus)
 		}
 
 		// Public Restaurant and Food Routes
